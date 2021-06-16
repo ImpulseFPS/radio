@@ -43,7 +43,7 @@ function openGui()
   local radio = true
   local inPhone = exports["ps-phone"]:InPhone()
   if (inPhone) then
-    PSCore.Functions.Notify('Nemožeš to napravit dok je mobitel otvoren.')
+    PSCore.Functions.Notify('Cant do that.','error')
    return
  end
  local job =  PSCore.Functions.GetPlayerData().job.name
@@ -87,7 +87,7 @@ RegisterNUICallback('click', function(data, cb)
 end)
 
 RegisterNUICallback('volumeUp', function(data, cb)
-  local radioVol = exports['ps-voice']:getRadioVolume()
+  local radioVol = exports['ps-voice']:getRadioVolume() -- Keep in mind i need to update my pma-voice and make new exports for it work.
   local newRadioVol = ((radioVol and tonumber(radioVol)) or 0.1) + 0.1
   if newRadioVol >= 1.0 then
     newRadioVol = 1.0
@@ -95,13 +95,13 @@ RegisterNUICallback('volumeUp', function(data, cb)
   if newRadioVol <= 0.1 then
     newRadioVol = 0.1
   end
-  exports['ps-voice']:setRadioVolume(newRadioVol)
+  exports['ps-voice']:setRadioVolume(newRadioVol) -- Keep in mind i need to update my pma-voice and make new exports for it work.
   PSCore.Functions.Notify('Volume: ' ..newRadioVol)
   cb('ok')
 end)
 
 RegisterNUICallback('volumeDown', function(data, cb)
-  local radioVol = exports['ps-voice']:getRadioVolume()
+  local radioVol = exports['ps-voice']:getRadioVolume() -- Keep in mind i need to update my pma-voice and make new exports for it work.
   local newRadioVolD = ((radioVol and tonumber(radioVol)) or 0.1) - 0.1
   if newRadioVolD >= 1.0 then
     newRadioVolD = 1.0
@@ -109,7 +109,7 @@ RegisterNUICallback('volumeDown', function(data, cb)
   if newRadioVolD <= 0.1 then
     newRadioVolD = 0.1
   end
-  exports['ps-voice']:setRadioVolume(newRadioVolD)
+  exports['ps-voice']:setRadioVolume(newRadioVolD) -- Keep in mind i need to update my pma-voice and make new exports for it work.
   PSCore.Functions.Notify('Volume: ' ..newRadioVolD)
   cb('ok')
 end)
@@ -134,7 +134,7 @@ end
 
 RegisterNUICallback('poweredOn', function(data, cb)
   TriggerEvent("InteractSound_CL:PlayOnOne","radioon",0.6)
-  PSCore.Functions.Notify('Radio Upaljen.')
+  PSCore.Functions.Notify('Radio On.')
   cb('ok')
 end)
 
@@ -142,7 +142,7 @@ RegisterNUICallback('poweredOff', function(data, cb)
   TriggerEvent("InteractSound_CL:PlayOnOne","radiooff",0.6)
   exports["ps-voice"]:removePlayerFromRadio()
   exports['ps-voice']:setVoiceProperty('radioEnabled', false)
-  PSCore.Functions.Notify('Radio Ugrašen.')
+  PSCore.Functions.Notify('Radio Off.')
   cb('ok')
 end)
 
@@ -183,9 +183,9 @@ RegisterCommand('+radio', function()
     if HasItem then
       openGui()
     else
-      PSCore.Functions.Notify('Nemaš Radio.', 'error')
+      PSCore.Functions.Notify('You dont have a radio.', 'error')
     end
   end)
 end, false)
 
-RegisterKeyMapping('+radio', 'Otvori Radio', 'keyboard', '')
+RegisterKeyMapping('+radio', 'Open Radio', 'keyboard', '')
